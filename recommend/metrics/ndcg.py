@@ -1,6 +1,6 @@
 import math
 
-def calculate_cdng(recommended_lists, picked_items):
+def ndcg(recommended_lists, picked_items):
     """
     Calculates an average Discounted Cumulative Gain (DCG) across multiple users,
     assuming exactly one 'true' item (picked) per user.
