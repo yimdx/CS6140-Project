@@ -1,15 +1,14 @@
 import pandas as pd
-join_user_item = pd.read_pickle("join_user_item.pkl")
 import torch
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 
 class RecommenderDataset(Dataset):
-    def __init__(self, df):
+    def __init__(self, df:pd.DataFrame):
         """
         Args:
             df (pandas.DataFrame): DataFrame containing columns:
-                'userid', 'itemid', 'user_all_embedding', 'itemembedding', 'rating'
+                'userid', 'parent_asin', 'user_embedding', 'item_embedding', 'rating'
         """
         self.df = df
 
@@ -22,7 +21,7 @@ class RecommenderDataset(Dataset):
         user_emb = torch.tensor(row['user_embedding'], dtype=torch.float32)
         item_emb = torch.tensor(row['item_embedding'], dtype=torch.float32)
         item_emb = item_emb.unsqueeze(0)
-        rating = torch.tensor(row['rating'], dtype=torch.float32)
+        rating = torch.tensor(float(row['rating']), dtype=torch.float32)
         return user_emb, item_emb, rating
 
 # # Assuming your DataFrame is named df:
